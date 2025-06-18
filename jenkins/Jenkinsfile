@@ -8,6 +8,14 @@ pipeline {
             }
         }
 
+        stage('Check Go') {
+            steps {
+                echo 'Checking Go installation on Jenkins environment...'
+                sh 'which go'
+                sh 'go version'
+            }
+        }
+
         stage('Build') {
             steps {
                 echo 'Building Go binary...'
