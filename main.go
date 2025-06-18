@@ -33,7 +33,7 @@ func adminHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
     http.HandleFunc("/", homeHandler)
-    http.HandleFunc("/about", aboutHandler
+    http.HandleFunc("/about", aboutHandler)
     http.HandleFunc("/contact", contactHandler)
     http.HandleFunc("/admin", adminHandler)
 
