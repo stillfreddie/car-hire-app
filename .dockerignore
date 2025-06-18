@@ -1,0 +1,29 @@
+# Ignore Git files and folders
+.git
+.gitignore
+
+# Ignore documentation and markdown
+*.md
+
+# Ignore logs
+*.log
+
+# Ignore Jenkins pipeline files (optional)
+jenkins/
+
+# Ignore binaries
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+car-hire-app  # Your Go binary after build
+
+# Ignore coverage reports
+*.out
+
+# Ignore Docker images saved as tarballs
+*.tar
+
+# Ignore VS Code workspace files
+.vscode/

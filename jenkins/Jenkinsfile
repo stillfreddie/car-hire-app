@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'go build -o car-hire-app'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                // Add test command if needed
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application...'
+                // Add deploy script or command
+            }
+        }
+    }
+}
