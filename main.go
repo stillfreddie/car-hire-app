@@ -29,7 +29,7 @@ func contact(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintln(w, "Office Hours: Monday – Friday, 9AM to 5PM")
 }
 
-}
+
 
 func admin(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintln(w, "Admin Dashboard: Bookings will be displayed here soon.")
