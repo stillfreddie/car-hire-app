@@ -4,41 +4,39 @@ import (
     "html/template"
     "log"
     "net/http"
-    "path/filepath"
 )
 
 func renderTemplate(w http.ResponseWriter, tmpl string) {
-    layout := filepath.Join("templates", "layout.html")
-    page := filepath.Join("templates", tmpl+".html")
-
-    templates, err := template.ParseFiles(layout, page)
+    t, err := template.ParseFiles("templates/layout.html", "templates/" + tmpl + ".html")
     if err != nil {
-        http.Error(w, "Error loading template", http.StatusInternalServerError)
-        log.Println("Template error:", err)
+        http.Error(w, err.Error(), http.StatusInternalServerError)
         return
     }
+    t.Execute(w, nil)
+}
 
-    templates.Execute(w, nil)
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+    renderTemplate(w, "home")
+}
+
+func aboutHandler(w http.ResponseWriter, r *http.Request) {
+    renderTemplate(w, "about")
+}
+
+func contactHandler(w http.ResponseWriter, r *http.Request) {
+    renderTemplate(w, "contact")
+}
+
+func adminHandler(w http.ResponseWriter, r *http.Request) {
+    renderTemplate(w, "admin")
 }
 
 func main() {
-    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        renderTemplate(w, "home")
-    })
-    http.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
-        renderTemplate(w, "about")
-    })
-    http.HandleFunc("/contact", func(w http.ResponseWriter, r *http.Request) {
-        renderTemplate(w, "contact")
-    })
-    http.HandleFunc("/admin", func(w http.ResponseWriter, r *http.Request) {
-        renderTemplate(w, "admin")
-    })
+    http.HandleFunc("/", homeHandler)
+    http.HandleFunc("/about", aboutHandler
+    http.HandleFunc("/contact", contactHandler)
+    http.HandleFunc("/admin", adminHandler)
 
-    // Serve static files (CSS, images)
-    fs := http.FileServer(http.Dir("static"))
-    http.Handle("/static/", http.StripPrefix("/static/", fs))
-
-    log.Println("Server is running on http://localhost:8080")
-    http.ListenAndServe(":8080", nil)
+    log.Println("🚀 Server running at http://localhost:8080 ...")
+    log.Fatal(http.ListenAndServe(":8080", nil))
 }

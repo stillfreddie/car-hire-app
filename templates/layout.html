@@ -3,25 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Tech Man Car Hire</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
     <header>
-        <h1>🚗 Tech Man Car Hire</h1>
+        <h1>Tech Man Car Hire</h1>
         <nav>
             <a href="/">Home</a> |
             <a href="/about">About</a> |
             <a href="/contact">Contact</a> |
             <a href="/admin">Admin</a>
         </nav>
+        <hr>
     </header>
 
-    <main>
-        {{ template "content" . }}
-    </main>
+    {{ block "content" . }}{{ end }}
 
     <footer>
-        <p>&copy; 2025 Tech Man Car Hire. All rights reserved.</p>
+        <hr>
+        <p>&copy; 2025 Tech Man Car Hire</p>
     </footer>
 </body>
 </html>
