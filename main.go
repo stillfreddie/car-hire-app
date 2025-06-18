@@ -12,7 +12,10 @@ func renderTemplate(w http.ResponseWriter, tmpl string) {
         http.Error(w, err.Error(), http.StatusInternalServerError)
         return
     }
-    t.Execute(w, nil)
+
+    if err := t.Execute(w, nil); err != nil {
+        log.Println("Template execution error:", err)
+    }
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
@@ -36,6 +39,9 @@ func main() {
     http.HandleFunc("/about", aboutHandler)
     http.HandleFunc("/contact", contactHandler)
     http.HandleFunc("/admin", adminHandler)
+
+    // Static files like images and CSS
+    http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
     log.Println("🚀 Server running at http://localhost:8080 ...")
     log.Fatal(http.ListenAndServe(":8080", nil))
