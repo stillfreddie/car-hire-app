@@ -2,21 +2,35 @@ pipeline {
     agent any
 
     stages {
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/stillfreddie/car-hire-app.git'
+            }
+        }
+
         stage('Build') {
             steps {
+                echo 'Building Go binary...'
                 sh 'go build -o car-hire-app'
             }
         }
-        stage('Test') {
+
+        stage('Build Docker Image') {
             steps {
-                echo 'Running tests...'
-                // Add test command if needed
+                echo 'Building Docker image...'
+                sh 'docker build -t car-hire-app .'
             }
         }
+
         stage('Deploy') {
             steps {
-                echo 'Deploying application...'
-                // Add deploy script or command
+                echo 'Stopping old container (if any)...'
+                sh '''
+                docker stop car-hire-app || true
+                docker rm car-hire-app || true
+                echo "Running new container..."
+                docker run -d -p 8080:8080 --name car-hire-app car-hire-app
+                '''
             }
         }
     }
